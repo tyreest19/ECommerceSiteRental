@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    {% import "bootstrap/utils.html" as utils %}
+    {% import "bootstrap/wtf.html" as wtf %}
+</head>
+<body>
+    <div class="content-section">
+  <br/>
+  {{ utils.flashed_messages() }}
+  <br/>
+  <div class="center">
+    <h1>Login to your account</h1>
+    <br/>
+    {{ wtf.quick_form(form) }}
+  </div>
+</div>
+
+</body>
+</html>
