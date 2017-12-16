@@ -100,7 +100,6 @@ class SignUpTable(db.Model):
             "youtubeHandle": self.youtubeHandle
         }
 
-
 def read(table, id):
     """Reads a row from desried table within the SaveMeTime database
         Arguements:
@@ -115,31 +114,21 @@ def read(table, id):
     return from_sql(result)
 # [END read]
 
-def search(table, **kwargs):
-    new_dict = {}
-    for key in kwargs.keys():
-        if kwargs[key] != '':
-            new_dict[key] = kwargs[key]
-    list_of_results = []
-    for result in table.query.filter_by(**new_dict).all():
-        list_of_results.append(result.returnAsDict())
-    return list_of_results
-
 # [START create]
-def create(table, data):
+def create(new_row):
     """Adds row to a table.
         Arguements:
-            table: Pass in the reference to the desired table object above.
-            data: Pass in dictionary containing the values for the row.
+            new_row: New object of the containing the values of the new row that you wish to add to the database.
+        Example:
+            new_user = Users(enter data)
+            create(new_user)
         Returns:
             A dictionary containing containing the rows information.
     """
-    row = table(**data)
-    db.session.add(row)
+    db.session.add(new_row)
     db.session.commit()
-    return from_sql(row)
+    return from_sql(new_row)
 # [END create]
-
 
 # [START update]
 def update(table, id, data):

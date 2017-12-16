@@ -31,6 +31,10 @@ class RegistrationForm(FlaskForm):
         if Users.query.filter_by(username=field.data).first():
             raise ValidationError('Username is already in use.')
 
+    def validate_password(self, field):
+        if Users.query.filter_by(password=field.data).first():
+            raise ValidationError('Password is already in use.')
+
 class LoginForm(FlaskForm):
     """
     Form for users to login
