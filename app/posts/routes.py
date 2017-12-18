@@ -4,6 +4,7 @@ from app.database import create, Items, Users
 from app.posts.forms import ItemForm
 from flask import redirect, render_template
 from flask_login import current_user,login_required
+from functools import lru_cache # explanation: https://stackoverflow.com/a/14731729
 from time import gmtime, strftime
 
 @posts.route('/submitpost', methods=['GET', 'POST'])
@@ -28,9 +29,29 @@ def submitPost():
     return render_template('make_post.html', form=form, title='Submit Post') #, get_username=get_username)
 
 @posts.route('/listing', methods=['GET', 'POST'])
+@lru_cache()
 def viewPost():
     items = Items.query.all()
-    return render_template('listing_page.html', items=items, title='Listing')
+    categories = get_all_categories()
+    return render_template('listing_page.html', items=items, title='Listing', categories=categories)
+
+@posts.route('/listing/category-<category>', methods=['GET', 'POST'])
+@lru_cache()
+def viewPostByCategory(category):
+    items = Items.query.filter_by(category=category)
+    categories = get_all_categories()
+    title = 'Listings of all ' + category
+    return render_template('listing_page.html', items=items, title=title, categories=categories)
+
+@lru_cache()
+def get_all_categories():
+    categories = []
+    items = Items.query.all()
+    for item in items:
+        print('functions on item', item.category)
+        if item.category not in categories:
+            categories.append(item)
+    return categories
 
 def get_current_user():
     return current_user.get_id() # return userID in get_id()
