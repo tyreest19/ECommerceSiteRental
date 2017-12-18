@@ -60,12 +60,6 @@ class Users(UserMixin, db.Model):
                    email=self.email, password=self.password, address=self.address,
                    userID=self.userID)
 
-# Set up user_loader
-@login_manager.user_loader
-def load_user(user_id):
-    return Users.query.get(int(user_id))
-
-
 class SignUpTable(db.Model):
     """This class represents the Signup table."""
     __tablename__ = "SignUpTable"
@@ -99,6 +93,23 @@ class SignUpTable(db.Model):
             "tumblrHandle": self.tumblrHandle,
             "youtubeHandle": self.youtubeHandle
         }
+
+class Items(db.Model):
+    """This class represents the Items table."""
+    __tablename__ = "Items"
+    postedDate = db.Column(db.DATE())
+    itemID = db.Column(db.Integer, primary_key=True)
+    userID = db.Column(db.Integer, db.ForeignKey('Users.userID'), primary_key=True)
+    name = db.Column(db.VARCHAR(100))
+    category = db.Column(db.VARCHAR(100))
+    cost = db.Column(db.Integer)
+    description = db.Column(db.TEXT())
+
+
+# Set up user_loader
+@login_manager.user_loader
+def load_user(user_id):
+    return Users.query.get(int(user_id))
 
 def read(table, id):
     """Reads a row from desried table within the SaveMeTime database

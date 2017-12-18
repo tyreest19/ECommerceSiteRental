@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %}Sign In{% endblock %}
+{% block body %}
+    <div class="content-section">
+{#        <div class="center">#}
+                <div class="row">
+                    <div class="col-2 left-align">
+                        <h1>Categories</h1>
+                        {% for item in items %}
+                            <p>{{ item.category }}</p>
+                        {% endfor %}
+                    </div>
+                    <div class="col-10 center">
+                        <h1>Items For Sale</h1>
+                         {% for item in items %}
+                            <h2>{{ item.name }}</h2>
+                             <h3>Category: {{ item.category }}</h3>
+                             <h4 style='display:inline'>Description:</h4>
+                             <p style='display:inline'>{{ item.description }}<p>
+                             <p>Cost: ${{ item.cost/100 }}</p>
+                             <p>Posted Date: {{ item.postedDate }}</p>
+                        {#         <p>Posted By {{ get_username(item.userID)}}</p>#}
+                         {% endfor %}
+                        </div>
+                    </div>
+                </div>
+{#        </div>#}
+    </div>
+{% endblock %}

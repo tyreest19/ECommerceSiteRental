@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import IntegerField, PasswordField, StringField, SubmitField, ValidationError
+from wtforms import DateField, IntegerField, PasswordField, StringField, SubmitField, ValidationError
 from wtforms.validators import DataRequired, Email, EqualTo
 
 from ..database import Users
@@ -10,9 +10,7 @@ class RegistrationForm(FlaskForm):
     """
     email = StringField('Email', validators=[DataRequired(), Email()])
     address = StringField('Adress', validators=[DataRequired()])
-    day = IntegerField('Day', validators=[DataRequired()])
-    month = IntegerField('Month', validators=[DataRequired()])
-    year = IntegerField('Year', validators=[DataRequired()])
+    date = DateField('Date', validators=[DataRequired()], format='%m/%d/%Y')
     username = StringField('Username', validators=[DataRequired()])
     first_name = StringField('First Name', validators=[DataRequired()])
     last_name = StringField('Last Name', validators=[DataRequired()])

@@ -1,8 +1,7 @@
 import datetime
-from flask import flash, redirect, render_template, url_for
+from flask import flash, redirect, render_template
 from flask_login import login_required, login_user, logout_user
 from app.auth.forms import LoginForm, RegistrationForm
-
 from app.auth import auth
 from app import db
 from app.database import create, Users
@@ -21,12 +20,11 @@ def register():
                                              username=form.username.data, email=form.email.data,
                                              password=form.password.data, address=form.address.data,
                                              userID=userID,
-                                             birthdate=datetime.date(form.year.data, form.month.data,
-                                                                        form.day.data))
+                                             birthdate=form.date.data)
         create(new_user)
         return redirect('/login')
     # load registration template
-    return render_template('registration_page.html', form=form)
+    return render_template('registration_page.html', form=form, title='Register')
 
 @auth.route('/login', methods=['GET', 'POST'])
 def login():
@@ -53,7 +51,7 @@ def login():
             flash('Invalid email or password.')
 
     # load login template
-    return render_template('login_page.html', form=form)
+    return render_template('login_page.html', form=form, title='Login')
 
 @auth.route('/logout')
 @login_required
