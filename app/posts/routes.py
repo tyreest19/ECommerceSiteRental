@@ -29,19 +29,19 @@ def submitPost():
     return render_template('make_post.html', form=form, title='Submit Post') #, get_username=get_username)
 
 @posts.route('/listing', methods=['GET', 'POST'])
-@lru_cache()
 def viewPost():
     items = Items.query.all()
     categories = get_all_categories()
-    return render_template('listing_page.html', items=items, title='Listing', categories=categories)
+    return render_template('listing_page.html', items=items, title='Listing', categories=categories,
+                           get_username=get_username)
 
 @posts.route('/listing/category-<category>', methods=['GET', 'POST'])
-@lru_cache()
 def viewPostByCategory(category):
     items = Items.query.filter_by(category=category)
     categories = get_all_categories()
     title = 'Listings of all ' + category
-    return render_template('listing_page.html', items=items, title=title, categories=categories)
+    return render_template('listing_page.html', items=items, title=title, categories=categories,
+                           get_username=get_username)
 
 @lru_cache()
 def get_all_categories():
@@ -49,12 +49,18 @@ def get_all_categories():
     items = Items.query.all()
     for item in items:
         print('functions on item', item.category)
-        if item.category not in categories:
-            categories.append(item)
+        if not item.category in categories:
+            print("i worked")
+            categories.append(item.category)
+            print(categories)
     return categories
+
+@lru_cache()
+def get_all_items():
+    return Items.query.all()
 
 def get_current_user():
     return current_user.get_id() # return userID in get_id()
 
 def get_username(userID):
-    return Items.query.filter_by(userID=userID).first()
+    return Items.query.filter_by(userID=userID).first().name

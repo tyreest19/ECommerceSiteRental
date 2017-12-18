@@ -44,7 +44,7 @@ def login():
             login_user(user)
 
             # redirect to the dashboard page after login COMING SOON
-            return 'success'
+            return redirect('/listing')
 
         # when login details are incorrect
         else:

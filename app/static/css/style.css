@@ -76,7 +76,7 @@ p.copyright {
     padding-bottom: 50px;
     text-align: center;
     color: #f8f8f8;
-    background: url(../img/home-screen.jpg) no-repeat center center;
+    background: url(../img/intro-bg.jpg) no-repeat center center;
     background-size: cover;
     height: 100%;
 }
@@ -111,4 +111,9 @@ p.copyright {
   height: auto !important;
   height: 100%;
   margin: 0 auto -4em;
+}
+
+.bgimg {
+    background-size: contain;
+    background: url(../img/coming-soon.jpg);
 }

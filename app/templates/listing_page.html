@@ -4,12 +4,11 @@
     <div class="content-section">
 {#        <div class="center">#}
                 <div class="row">
-
                     <div class="col-2 left-align">
                         <h3 align="center">Categories</h3>
                         <div class="center">
                         {% for category in categories %}
-                            <a href="/listing/category-{{ category.category }}"><p>{{ category.category }}</p></a>
+                            <a href="/listing/category-{{ category }}" style="color: #73AD21"><p>{{ category }}</p></a>
                         {% endfor %}
                         </div>
                     </div>
@@ -17,18 +16,24 @@
                         <h1>Items For Sale</h1>
                         <hr>
                          {% for item in items %}
-                            <h2>{{ item.name }}</h2>
-                             <h3>Category: {{ item.category }}</h3>
-                             <h4 style='display:inline'>Description:</h4>
-                             <p style='display:inline'>{{ item.description }}<p>
-                             <p>Cost: ${{ item.cost/100 }}</p>
-                             <p>Posted Date: {{ item.postedDate }}</p>
-                        {#         <p>Posted By {{ get_username(item.userID)}}</p>#}
+                             <div class="row">
+                                 <div class="col-4">
+                                        <img class="img-responsive" src="../static/img/coming-soon.jpg"  height="350" width="350"/>
+                                 </div>
+                                 <div class="col-8">
+                                     <h2>{{ item.name }}</h2>
+                                     <h3>Category: {{ item.category }}</h3>
+                                     <h4 style='display:inline'>Description:</h4>
+                                     <p style='display:inline'>{{ item.description }}<p>
+                                     <p>Cost: ${{ item.cost/100 }}</p>
+                                     <p>Posted Date: {{ item.postedDate }}</p>
+                                     <p>Posted By {{ get_username(item.userID) }}</p>
+                                 </div>
+                             </div>
                              <hr>
                          {% endfor %}
                         </div>
                     </div>
-                </div>
 {#        </div>#}
     </div>
 {% endblock %}
