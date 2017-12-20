@@ -123,3 +123,9 @@ def update(table, id, data):
         setattr(row, k, v)
     db.session.commit()
     return from_sql(row)
+
+def delete(table, id):
+    """Deletes a row within a table"""
+    row = table.query.get(id)
+    db.session.delete(row)
+    db.session.commit()

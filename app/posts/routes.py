@@ -3,7 +3,7 @@ from app import db
 from app import stripe_keys
 from app.database import create, Items
 from app.posts.forms import ItemForm
-from flask import redirect, render_template
+from flask import abort, redirect, render_template
 from flask_login import login_required
 from app.utils import get_all_categories, get_current_user, get_item, get_item_cost, get_username
 from time import gmtime, strftime
@@ -29,17 +29,16 @@ def submitPost():
     # load make_post template
     return render_template('make_post.html', form=form, title='Submit Post') #, get_username=get_username)
 
-@posts.route('/listing', methods=['GET', 'POST'])
+@posts.route('/listing', methods=['GET'])
 def viewPost():
-    print('current userID:', get_current_user())
     items = Items.query.filter_by(sold=False)
     categories = get_all_categories()
     return render_template('listing_page.html', items=items, title='Listing', categories=categories,
                            get_username=get_username)
 
-@posts.route('/listing/category-<category>', methods=['GET', 'POST'])
+@posts.route('/listing/category-<category>', methods=['GET'])
 def viewPostByCategory(category):
-    items = Items.query.filter_by(category=category)
+    items = Items.query.filter_by(category=category, sold=False)
     categories = get_all_categories()
     title = 'Listings of all ' + category
     return render_template('listing_page.html', items=items, title=title, categories=categories,
@@ -51,3 +50,13 @@ def viewItem(itemID):
     return render_template('viewItem.html', key=stripe_keys['publishable_key'], item=item,
                            get_item_cost=get_item_cost, get_username=get_username)
 
+@posts.route('/delete-item-<itemID>-<userID>')
+@login_required
+def deleteItem(itemID, userID):
+    """Deletes a row within a table"""
+    if int(get_current_user()) == int(userID):
+        row = Items.query.get([itemID, userID])
+        db.session.delete(row)
+        db.session.commit()
+        return redirect('/user-page')
+    return render_template('404.html')

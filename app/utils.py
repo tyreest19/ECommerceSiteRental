@@ -1,5 +1,5 @@
 from app import db
-from app.database import Items
+from app.database import Users, Items
 from flask_login import current_user
 from functools import lru_cache # explanation: https://stackoverflow.com/a/14731729
 
@@ -21,6 +21,9 @@ def get_all_items():
 
 def get_current_user():
     return current_user.get_id() # return userID in get_id()
+
+def get_user_email(userID):
+    return Users.query.filter_by(userID=userID).first().email
 
 def get_item(itemID):
     return Items.query.filter_by(itemID=itemID).first()

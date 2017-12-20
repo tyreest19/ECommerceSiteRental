@@ -35,6 +35,9 @@ def create_app(config_name):
     from app.auth import auth as auth_blueprint
     app.register_blueprint(auth_blueprint)
 
+    from app.error import error as error_blueprint
+    app.register_blueprint(error_blueprint)
+
     from app.home import home as home_blueprint
     app.register_blueprint(home_blueprint)
 
