@@ -7,6 +7,16 @@
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+     <style type="text/css" media="screen">
+    form article label {
+      display: block;
+      margin: 5px;
+    }
+
+    form .submit {
+      margin: 15px 0;
+    }
+  </style>
 </head>
 <body>
       <nav class="navbar navbar-expand-lg navbar-light bg-success">
@@ -26,6 +36,8 @@
             {% if current_user.is_authenticated %}
                 <li class="nav-item active">
                 <a class="nav-link text-white" href="/submitpost">Post an Item</a>
+                <li class="nav-item active">
+                <a class="nav-link text-white" href="/user-page">Account Info</a>
                 <li class="nav-item active">
                 <a class="nav-link text-white" href="/logout">Logout</a>
           </li>

@@ -4,8 +4,8 @@ from flask_login import login_required, login_user, logout_user
 from app.auth.forms import LoginForm, RegistrationForm
 from app.auth import auth
 from app import db
-from app.database import create, Users
-
+from app.database import create, Items, Users
+from app.posts.routes import get_current_user, get_username
 
 @auth.route('/register', methods=['GET', 'POST'])
 def register():
@@ -64,3 +64,13 @@ def logout():
 
     # redirect to the login page
     return redirect('/login')
+
+@auth.route('/user-page')
+@login_required
+def getAccountInfo():
+    """
+    Allows user to see their account information
+    """
+    return  render_template('user_page.html', user=Users.query.get(get_current_user()),
+                            items=Items.query.filter_by(userID=get_current_user()), get_username=get_username)
+

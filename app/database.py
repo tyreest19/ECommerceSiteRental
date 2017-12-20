@@ -21,7 +21,6 @@ class Users(UserMixin, db.Model):
     email = db.Column(db.VARCHAR(100))
     birthdate = db.Column(db.DATE())
     userID = db.Column(db.Integer, primary_key=True)
-
     # @property
     # def password(self):
     #     """
@@ -99,11 +98,13 @@ class Items(db.Model):
     __tablename__ = "Items"
     postedDate = db.Column(db.DATE())
     itemID = db.Column(db.Integer, primary_key=True)
+    buyerID = db.Column(db.Integer)
     userID = db.Column(db.Integer, db.ForeignKey('Users.userID'), primary_key=True)
     name = db.Column(db.VARCHAR(100))
     category = db.Column(db.VARCHAR(100))
     cost = db.Column(db.Integer)
     description = db.Column(db.TEXT())
+    sold = db.Column(db.BOOLEAN)
 
 
 # Set up user_loader

@@ -1,5 +1,5 @@
 # app/__init__.py
-
+import os
 from flask import Flask
 # third-party imports
 from flask_bootstrap import Bootstrap
@@ -16,6 +16,11 @@ db = SQLAlchemy()
 
 # after the db variable initialization
 login_manager = LoginManager()
+
+stripe_keys = {
+  'secret_key': os.environ['SECRET_KEY'],
+  'publishable_key': os.environ['PUBLISHABLE_KEY']
+}
 
 def create_app(config_name):
     # Explanation of configs: http://flask.pocoo.org/docs/0.12/config/
@@ -37,4 +42,8 @@ def create_app(config_name):
 
     from app.posts import posts as posts_blueprint
     app.register_blueprint(posts_blueprint)
+
+    from app.payments import payments as payments_blueprint
+    app.register_blueprint(payments_blueprint)
+
     return app

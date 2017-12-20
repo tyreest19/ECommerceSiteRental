@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block title %}View Item{% endblock %}
+{% block body %}
+{% import "bootstrap/utils.html" as utils %}
+{% import "bootstrap/wtf.html" as wtf %}
+<div class="content-section">
+  <div class="row">
+       <div class="col-7">
+           <img class="img-responsive" src="../static/img/coming-soon.jpg"  height="400" width="400"/>
+       </div>
+      <div class="col-5">
+          <h2>{{ item.name }}</h2>
+          <h3>Category: {{ item.category }}</h3>
+          <h4 style='display:inline'>Description:</h4>
+          <p style='display:inline'>{{ item.description }}<p>
+          <p>Cost: ${{ item.cost/100 }}</p>
+          <p>Posted Date: {{ item.postedDate }}</p>
+          <p>Posted By {{ get_username(item.userID) }}</p>
+          {% if not item.sold %}
+          <form action="/process-payment-{{item.itemID}}" method="post">
+            <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                data-key="{{ key }}"
+                data-description="Your purchased a {{ item.description }}"
+                data-amount="{{item.cost}}"
+                data-locale="auto"></script>
+          </form>
+          {%  endif %}
+      </div>
+  </div>
+</div>
+{% endblock %}
