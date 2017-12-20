@@ -59,40 +59,6 @@ class Users(UserMixin, db.Model):
                    email=self.email, password=self.password, address=self.address,
                    userID=self.userID)
 
-class SignUpTable(db.Model):
-    """This class represents the Signup table."""
-    __tablename__ = "SignUpTable"
-    twitterHandle = db.Column(db.VARCHAR(100))
-    instagramHandle = db.Column(db.VARCHAR(100))
-    signupID = db.Column(db.Integer, primary_key=True)
-    email = db.Column(db.VARCHAR(255))
-    pintrestHandle = db.Column(db.VARCHAR(100))
-    tumblrHandle = db.Column(db.VARCHAR(100))
-    youtubeHandle = db.Column(db.VARCHAR(100))
-
-    def __repr__(self):
-        return "[" \
-               "twitterHandle: {twitterHandle}," \
-               "instagramHandle: {instagramHandle}," \
-               "signupID: {signupID}," \
-               "email: {email}," \
-               "tumblrHandle: {tumblrHandle}," \
-               "pintrestHandle: {pintrestHandle}," \
-               "youtubeHandle: {youtubeHandle}," \
-               "]".format(twitterHandle=self.twitterHandle, instagramHandle=self.instagramHandle,
-                          signupID=self.signupID, email=self.email, pintrestHandle=self.pintrestHandle,
-                          tumblrHandle=self.tumblrHandle, youtubeHandle=self.youtubeHandle)
-    def returnAsDict(self):
-        return {
-            "twitterHandle": self.twitterHandle,
-            "instagramHandle": self.instagramHandle,
-            "signupID": self.signupID,
-            "email": self.email,
-            "pintrestHandle": self.pintrestHandle,
-            "tumblrHandle": self.tumblrHandle,
-            "youtubeHandle": self.youtubeHandle
-        }
-
 class Items(db.Model):
     """This class represents the Items table."""
     __tablename__ = "Items"
@@ -113,7 +79,7 @@ def load_user(user_id):
     return Users.query.get(int(user_id))
 
 def read(table, id):
-    """Reads a row from desried table within the SaveMeTime database
+    """Reads a row from desried table within the database
         Arguements:
             table: Pass in the reference to the desired table object above.
             id: Id for desired row.
