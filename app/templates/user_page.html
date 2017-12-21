@@ -34,7 +34,7 @@
                         <p>Sold: {{ item.sold }}<p>
                         {% if item.sold %}
                                 {% if item.buyerID %}
-                                    <p>Buyer: {{ get_username(item.buyerID) }}</p>
+                                    <p>Buyer: {{ get_user_fname(item.buyerID) }}</p>
                                 {% else %}
                                     <p>Buyer: Guest</p>
                             {% endif %}

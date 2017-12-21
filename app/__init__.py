@@ -4,6 +4,7 @@ from flask import Flask
 # third-party imports
 from flask_bootstrap import Bootstrap
 from flask_login import LoginManager
+from flask_mail import Mail
 from flask_sqlalchemy import SQLAlchemy
 
 
@@ -12,7 +13,7 @@ from config import app_config
 
 # db variable initialization
 db = SQLAlchemy()
-
+mail = Mail()
 # after the db variable initialization
 login_manager = LoginManager()
 
@@ -31,7 +32,7 @@ def create_app(config_name):
     login_manager.login_message = "You must be logged in to access this page."
     login_manager.login_view = "auth.login" # Will send user to view if not logged in
     Bootstrap(app) # Allows forms to access CSS files
-
+    mail.init_app(app)
     from app.auth import auth as auth_blueprint
     app.register_blueprint(auth_blueprint)
 

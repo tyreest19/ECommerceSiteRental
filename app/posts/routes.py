@@ -5,7 +5,7 @@ from app.database import create, Items
 from app.posts.forms import ItemForm
 from flask import abort, redirect, render_template
 from flask_login import login_required
-from app.utils import get_all_categories, get_current_user, get_item, get_item_cost, get_username
+from app.utils import get_all_categories, get_current_user, get_item, get_item_cost, get_user_fname
 from time import gmtime, strftime
 
 @posts.route('/submitpost', methods=['GET', 'POST'])
@@ -34,7 +34,7 @@ def viewPost():
     items = Items.query.filter_by(sold=False)
     categories = get_all_categories()
     return render_template('listing_page.html', items=items, title='Listing', categories=categories,
-                           get_username=get_username)
+                           get_username=get_user_fname)
 
 @posts.route('/listing/category-<category>', methods=['GET'])
 def viewPostByCategory(category):
@@ -42,13 +42,14 @@ def viewPostByCategory(category):
     categories = get_all_categories()
     title = 'Listings of all ' + category
     return render_template('listing_page.html', items=items, title=title, categories=categories,
-                           get_username=get_username)
+                           get_username=get_user_fname)
 
 @posts.route('/view-item-<itemID>', methods=['GET'])
 def viewItem(itemID):
     item = get_item(itemID)
     return render_template('viewItem.html', key=stripe_keys['publishable_key'], item=item,
-                           get_item_cost=get_item_cost, get_username=get_username)
+                           get_item_cost=get_item_cost, get_username=get_user_fname,
+                           page_viewer=get_current_user())
 
 @posts.route('/delete-item-<itemID>-<userID>')
 @login_required

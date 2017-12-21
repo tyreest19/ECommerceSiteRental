@@ -31,8 +31,14 @@ def get_item(itemID):
 def get_item_cost(itemID):
     return Items.query.filter_by(itemID=itemID).first().cost
 
-def get_username(userID):
-    return Items.query.filter_by(userID=userID).first().name
+def get_item_owner(itemID):
+    return Items.query.filter_by(itemID=itemID).first().userID
+
+def get_item_name(itemID):
+    return Items.query.filter_by(itemID=itemID).first().name
+
+def get_user_fname(userID):
+    return Users.query.filter_by(userID=userID).first().fname
 
 def markItemAsSold(itemID):
     """Updates a table\'s row.

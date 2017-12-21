@@ -15,7 +15,6 @@ class Users(UserMixin, db.Model):
     __tablename__ = "Users"
     fname = db.Column(db.VARCHAR(100))
     lname = db.Column(db.VARCHAR(100))
-    username = db.Column(db.VARCHAR(100))
     password = db.Column(db.VARCHAR(100))
     address = db.Column(db.VARCHAR(100))
     email = db.Column(db.VARCHAR(100))

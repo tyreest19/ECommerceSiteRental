@@ -5,7 +5,7 @@ from app.auth.forms import LoginForm, RegistrationForm
 from app.auth import auth
 from app import db
 from app.database import create, Items, Users
-from app.posts.routes import get_current_user, get_username
+from app.utils import get_current_user, get_user_fname
 
 @auth.route('/register', methods=['GET', 'POST'])
 def register():
@@ -16,11 +16,9 @@ def register():
     form = RegistrationForm()
     if form.validate_on_submit():
         userID = db.session.query(db.func.max(Users.userID)).scalar() + 1
-        new_user = Users(fname=form.first_name.data, lname=form.last_name.data,
-                                             username=form.username.data, email=form.email.data,
-                                             password=form.password.data, address=form.address.data,
-                                             userID=userID,
-                                             birthdate=form.date.data)
+        new_user = Users(fname=form.first_name.data, lname=form.last_name.data,  email=form.email.data,
+                            password=form.password.data, address=form.address.data, userID=userID,
+                            birthdate=form.date.data)
         create(new_user)
         return redirect('/login')
     # load registration template
@@ -72,5 +70,6 @@ def getAccountInfo():
     Allows user to see their account information
     """
     return  render_template('user_page.html', user=Users.query.get(get_current_user()),
-                            items=Items.query.filter_by(userID=get_current_user()), get_username=get_username)
+                            items=Items.query.filter_by(userID=get_current_user()),
+                            get_user_fname=get_user_fname)
 

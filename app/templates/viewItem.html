@@ -17,13 +17,14 @@
           <p>Posted Date: {{ item.postedDate }}</p>
           <p>Posted By {{ get_username(item.userID) }}</p>
           {% if not item.sold %}
-          <form action="/process-payment-{{item.itemID}}" method="post">
-            <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
-                data-key="{{ key }}"
-                data-description="Your purchased a {{ item.description }}"
-                data-amount="{{item.cost}}"
-                data-locale="auto"></script>
-          </form>
+              <a href="/rent-{{ page_viewer }}-{{ item.itemID }}-{{ item.userID }}-{{ item.name }}"><p>Rent Item</p>
+{#          <form action="/process-payment-{{item.itemID}}" method="post">#}
+{#            <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"#}
+{#                data-key="{{ key }}"#}
+{#                data-description="Your purchased a {{ item.description }}"#}
+{#                data-amount="{{item.cost}}"#}
+{#                data-locale="auto"></script>#}
+{#          </form>#}
           {%  endif %}
       </div>
   </div>
